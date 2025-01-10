@@ -67,7 +67,6 @@
   </style>
 </head>
 <body>
-
 <div class="login-container">
   <h2>Login</h2>
   <form action="/login" method="post">
@@ -82,6 +81,7 @@
     <div class="form-group">
       <button type="submit">Login</button>
     </div>
+    <pre>${errorMessage}</pre>
   </form>
   <div class="form-footer">
     <p>Don't have an account? <a href="/register">Register here</a></p>

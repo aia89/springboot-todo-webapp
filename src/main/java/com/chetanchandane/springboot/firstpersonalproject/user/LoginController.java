@@ -13,7 +13,12 @@ import java.util.logging.Logger;
 @Controller
 public class LoginController {
 
+    private AuthenticationService authenticationService;
 
+    public LoginController(AuthenticationService authenticationService) {
+        super();
+        this.authenticationService = authenticationService;
+    }
 
     @RequestMapping(value="login", method = RequestMethod.GET)
     public String gotoLoginPage(){
@@ -22,8 +27,18 @@ public class LoginController {
 
     @RequestMapping(value="login", method = RequestMethod.POST)
     public String gotoWelcomePage(@RequestParam String username, @RequestParam String password, ModelMap model){
+        //model
         model.put("username", username);
-        return "welcome";
+
+        //Authentication
+        if(authenticationService.authenticate(username, password)){
+            model.put("username", username);
+            return "welcome";
+        }
+        model.put("errorMessage", "Invalid Credentials!, Please try again.");
+        return "loginUser";
+
+
     }
 //    @RequestMapping("login")
 //    public String gotoLoginPage2(@RequestParam String name, ModelMap model){
