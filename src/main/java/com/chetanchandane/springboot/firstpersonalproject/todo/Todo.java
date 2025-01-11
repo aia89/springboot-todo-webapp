@@ -1,5 +1,8 @@
 package com.chetanchandane.springboot.firstpersonalproject.todo;
 
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.Past;
+
 import java.time.LocalDate;
 import java.util.Locale;
 
@@ -11,6 +14,8 @@ public class Todo {
     private int id;
     private String username;
     private String description;
+
+    @FutureOrPresent(message="Deadline can not be in past!")
     private LocalDate targetDate;
     private boolean status;
 

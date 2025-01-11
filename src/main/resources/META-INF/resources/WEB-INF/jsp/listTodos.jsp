@@ -1,7 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link href="webjars/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Todo List</title>
@@ -45,7 +47,7 @@
 <body>
 
 <h1>Todo List</h1>
-<p>${todos}</p>
+
 <table>
   <thead>
     <tr>
@@ -54,6 +56,7 @@
       <th>Description</th>
       <th>Target Date</th>
       <th>Status</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -65,10 +68,22 @@
         <td>${todo.description}</td>
         <td>${todo.targetDate}</td>
         <td class="status">${todo.status ? "Completed" : "Pending"}</td>
+        <td>
+                  <form action="/api/v1/delete-todo" method="POST" style="display: inline;">
+                    <input type="hidden" name="id" value="${todo.id}" />
+                    <button type="submit" class="btn btn-warning">Delete</button>
+                  </form>
+        </td>
       </tr>
     </c:forEach>
   </tbody>
 </table>
+<a href="/api/v1/add-todo" class="btn btn-primary add-todo-btn">Add Todo</a>
+<!-- Bootstrap JS from WebJars -->
+<script src="/webjars/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+
+<!-- jQuery from WebJars -->
+<script src="/webjars/jquery/3.6.0/jquery.min.js"></script>
 
 </body>
 </html>

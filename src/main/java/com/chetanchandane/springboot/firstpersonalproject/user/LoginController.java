@@ -20,7 +20,7 @@ public class LoginController {
         this.authenticationService = authenticationService;
     }
 
-    @RequestMapping(value="login", method = RequestMethod.GET)
+    @RequestMapping(value="/api/v1/login", method = RequestMethod.GET)
     public String gotoLoginPage(){
         return "loginUser";
     }
