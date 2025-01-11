@@ -57,6 +57,7 @@
       <th>Target Date</th>
       <th>Status</th>
       <th></th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -68,6 +69,12 @@
         <td>${todo.description}</td>
         <td>${todo.targetDate}</td>
         <td class="status">${todo.status ? "Completed" : "Pending"}</td>
+        <td>
+                          <form action="/api/v1/update-todo" method="POST" style="display: inline;">
+                            <input type="hidden" name="id" value="${todo.id}" />
+                            <button type="submit" class="btn btn-success">Update</button>
+                          </form>
+        </td>
         <td>
                   <form action="/api/v1/delete-todo" method="POST" style="display: inline;">
                     <input type="hidden" name="id" value="${todo.id}" />
