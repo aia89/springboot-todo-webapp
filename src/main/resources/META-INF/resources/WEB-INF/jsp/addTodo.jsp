@@ -33,7 +33,7 @@
   </style>
 </head>
 <body>
-
+<%@ include file="common/navigation.jspf" %>
 <div class="container">
   <div class="todo-container">
     <h2 class="text-center mb-4">Add a New Todo</h2>
