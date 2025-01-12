@@ -49,7 +49,16 @@ public class TodoService {
     }
 
     public void updateTodo(@Valid Todo todo){
-        deleteById(todo.getId());
-        todos.add(todo);
+        Todo existingTodo = findById(todo.getId());
+        if(existingTodo != null){
+//            System.out.println(existingTodo);
+            existingTodo.setDescription(todo.getDescription());
+            existingTodo.setTargetDate(todo.getTargetDate());
+            existingTodo.setStatus(todo.isStatus());
+        }
+        else {
+            System.out.println("Todo is missing! id="+ todo.getId());
+        }
+
     }
 }

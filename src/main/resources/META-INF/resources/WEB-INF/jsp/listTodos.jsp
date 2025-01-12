@@ -3,7 +3,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link href="webjars/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Todo List</title>
@@ -70,7 +69,7 @@
         <td>${todo.targetDate}</td>
         <td class="status">${todo.status ? "Completed" : "Pending"}</td>
         <td>
-                          <form action="/api/v1/update-todo" method="POST" style="display: inline;">
+                          <form action="/api/v1/update-todo" method="GET" style="display: inline;">
                             <input type="hidden" name="id" value="${todo.id}" />
                             <button type="submit" class="btn btn-success">Update</button>
                           </form>
@@ -85,7 +84,7 @@
     </c:forEach>
   </tbody>
 </table>
-<a href="/api/v1/add-todo" class="btn btn-primary add-todo-btn">Add Todo</a>
+<a href="/api/v1/add-todo" class="btn btn-success add-todo-btn">Add Todo</a>
 <!-- Bootstrap JS from WebJars -->
 <script src="/webjars/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
 

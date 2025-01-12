@@ -71,13 +71,14 @@ public class TodoController {
     @RequestMapping(value = "/api/v1/update-todo", method = RequestMethod.POST)
     public String updateTodo(ModelMap model, @Valid Todo todo, BindingResult result){
 
+//        System.out.println("received this todo:" + todo);
         if(result.hasErrors()){
             return "addTodo";
         }
         String username = (String)model.get("username");
         todo.setUsername(username);
         todoService.updateTodo(todo);
-        return "redirect:list-todos";
+        return "redirect:/api/v1/list-todos";
     }
 
 }

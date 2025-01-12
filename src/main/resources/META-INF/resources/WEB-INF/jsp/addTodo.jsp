@@ -37,7 +37,7 @@
 <div class="container">
   <div class="todo-container">
     <h2 class="text-center mb-4">Add a New Todo</h2>
-    <form:form action="/api/v1/add-todo" method="POST" modelAttribute="todo">
+    <form:form method="POST" modelAttribute="todo">
       <form:hidden path="id" />
       <form:hidden path="status" />
       <div class="mb-3">
