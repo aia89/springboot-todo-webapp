@@ -50,7 +50,7 @@
 <div class="welcome-container">
   <h1>Welcome, ${username}!!!!</h1>
   <p>You have successfully logged in.</p>
-  <a href="/dashboard">Go to Dashboard</a>
+  <a href="/api/v1/list-todos">Go to Dashboard</a>
 </div>
 
 </body>
