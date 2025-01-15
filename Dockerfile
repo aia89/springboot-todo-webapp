@@ -11,13 +11,13 @@ VOLUME /tmp
 EXPOSE 8080
 
 # jar file
-ARG JAR_FILE=target/*.jar
+ARG JAR_FILE=target/spring-boot-rest-api-todo.jar
 
 #copy jar file, or can also use ADD command
 # ADD ${JAR_FILE} app.jar
-COPY ${JAR_FILE} app.jar
+COPY ${JAR_FILE} spring-boot-rest-api-todo.jar
 
 # finally, run jar file
-ENTRYPOINT ["java","-jar","/app.jar", "-Djava.security.egd=file:/dev/./urandom"]
+ENTRYPOINT ["java","-jar","/spring-boot-rest-api-todo.jar"]
 
 

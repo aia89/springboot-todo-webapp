@@ -104,6 +104,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
+		<finalName>spring-boot-rest-api-todo</finalName>
 	</build>
 
 </project>
