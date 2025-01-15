@@ -3,7 +3,7 @@ run-name: ${{github.actor}} initiated the workflow
 on:
   pull_request:
     branches:
-      - test
+      - main
 
 jobs:
   docker:
