@@ -1,0 +1,23 @@
+name: Build and Deploy to DockerHub
+run-name: ${{github.actor}} initiated the workflow
+on:
+  pull_request:
+    branches:
+      - test
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Build and Push Docker Image
+        uses: mr-smithers-excellent/docker-build-push@v6
+        with:
+          image: chetanchandane/spring-boot-rest-api-todo
+          tags: latest
+          registry: docker.io
+          dockerfile: Dockerfile
+          username: ${{ vars.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
