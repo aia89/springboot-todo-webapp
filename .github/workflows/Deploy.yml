@@ -1,9 +1,9 @@
 name: Build and Deploy to DockerHub
-run-name: ${{github.actor}} initiated the workflow
+run-name: ${{github.actor}} initiated the Deploy workflow
 on:
-  pull_request:
+  push:
     branches:
-      - test
+      - main
 
 jobs:
   docker:
@@ -11,11 +11,15 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+      - name: Download JAR artifact
+        uses: actions/download-artifact@v3
+        with:
+            name: spring-boot-jar
       - name: Build and Push Docker Image
         uses: mr-smithers-excellent/docker-build-push@v6
         with:
           image: chetanchandane/spring-boot-rest-api-todo
-          tags: latest
+          tags: latest,${{ github.sha }}
           registry: docker.io
           dockerfile: Dockerfile
           username: ${{ vars.DOCKER_USERNAME }}

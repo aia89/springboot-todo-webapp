@@ -32,6 +32,12 @@ jobs:
       - name: build with Maven
         run: mvn clean install package
 
+      - name: build artifact for jar file
+        uses: actions/upload-artifact@v3
+        with:
+          name: spring-boot-jar
+          path: target/spring-boot-rest-api-todo.jar
+
 
 
 
