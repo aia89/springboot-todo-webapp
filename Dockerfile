@@ -11,7 +11,7 @@ VOLUME /tmp
 EXPOSE 8080
 
 # jar file
-ARG JAR_FILE=target/spring-boot-rest-api-todo.jar
+ARG JAR_FILE=target/*.jar
 
 #copy jar file, or can also use ADD command
 # ADD ${JAR_FILE} app.jar
