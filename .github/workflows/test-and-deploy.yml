@@ -38,7 +38,7 @@ jobs:
         run: mvn clean install package
 
       - name: Log in to Docker Hub
-        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ vars.DOCKER_USERNAME }}" --password-stdin
+        run: echo "C1tz@ca1ifornia" | docker login -u "chetanchandane" --password-stdin
 
       - name: Build Docker Image
         run: docker build -t ${{ vars.DOCKER_USERNAME }}/spring-boot-rest-api-todo:latest -t ${{ vars.DOCKER_USERNAME }}/spring-boot-rest-api-todo:${{ github.sha }} .
