@@ -1,16 +1,16 @@
-name: Run test on Java 11
-run-name: ${{ github.actor }} has initiated this test workflow.
+name: Test and Deploy to DockerHub
+run-name: ${{ github.actor }} initiated this workflow
 on:
   push:
     branches:
-      - test
+      - main
 
 jobs:
   test:
     runs-on: ubuntu-latest
     name: Run unit tests on Java 23
     steps:
-      - name: check out branch
+      - name: Checkout code
         uses: actions/checkout@v3
 
       - name: Set up JDK 23
@@ -20,24 +20,43 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: clear project
+      - name: Clear project
         run: mvn clean
 
-      - name: compile project
+      - name: Compile project
         run: mvn compile
 
-      - name: run test cases
+      - name: Run test cases
         run: mvn test
 
-      - name: build with Maven
+      - name: Build with Maven
         run: mvn clean install package
 
-      - name: build artifact for jar file
+      - name: Upload JAR artifact
         uses: actions/upload-artifact@v3
         with:
           name: spring-boot-jar
           path: target/spring-boot-rest-api-todo.jar
 
+  deploy:
+    runs-on: ubuntu-latest
+    name: Build and Push Docker Image
+    needs: test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
 
+      - name: Download JAR artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: spring-boot-jar
 
-
+      - name: Build and Push Docker Image
+        uses: mr-smithers-excellent/docker-build-push@v6
+        with:
+          image: chetanchandane/spring-boot-rest-api-todo
+          tags: latest,${{ github.sha }}
+          registry: docker.io
+          dockerfile: Dockerfile
+          username: ${{ vars.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
