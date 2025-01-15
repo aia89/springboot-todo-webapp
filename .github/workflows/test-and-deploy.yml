@@ -13,15 +13,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up JDK 23
+      - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
-          java-version: '23'
+          java-version: '17'
           distribution: 'temurin'
           cache: maven
 
-      - name: Clear project
-        run: mvn clean
+      - name: Cache Maven dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
 
       - name: Compile project
         run: mvn compile
@@ -32,31 +37,14 @@ jobs:
       - name: Build with Maven
         run: mvn clean install package
 
-      - name: Upload JAR artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: spring-boot-jar
-          path: target/spring-boot-rest-api-todo.jar
+      - name: Log in to Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ vars.DOCKER_USERNAME }}" --password-stdin
 
-  deploy:
-    runs-on: ubuntu-latest
-    name: Build and Push Docker Image
-    needs: test
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: Build Docker Image
+        run: docker build -t ${{ vars.DOCKER_USERNAME }}/spring-boot-rest-api-todo:latest -t ${{ vars.DOCKER_USERNAME }}/spring-boot-rest-api-todo:${{ github.sha }} .
 
-      - name: Download JAR artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: spring-boot-jar
-
-      - name: Build and Push Docker Image
-        uses: mr-smithers-excellent/docker-build-push@v6
-        with:
-          image: chetanchandane/spring-boot-rest-api-todo
-          tags: latest,${{ github.sha }}
-          registry: docker.io
-          dockerfile: Dockerfile
-          username: ${{ vars.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Push Docker Image
+        run: |
+          docker push chetanchandane/spring-boot-rest-api-todo:latest
+          docker push chetanchandane/spring-boot-rest-api-todo:${{ github.sha }}
+  
